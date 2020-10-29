@@ -58,6 +58,20 @@ class WSDetalleVentaController extends AbstractController
 
 
     /**
+     * @Route("/ws/saisadog/detalleVenta/eliminar/{id}", name="ws/saisadog/detalleVenta/eliminar", methods={"DELETE"})
+     */
+    public function eliminarDetalleVenta($id) : JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $detalleventa = $entityManager->getRepository(DetalleVenta::class)
+            ->findOneBy(['id' => $id]);
+        $entityManager->remove($detalleventa);
+        $entityManager->flush();
+        return new JsonResponse(['status'=>'DetalleVenta eliminado'], Response::HTTP_OK);
+    }
+
+
+    /**
      * @Route("/ws/saisadog/detalleVenta/actualizar", name="ws/detalleVenta/actualizar/venta", methods={"POST"})
      */
     public function actualizarDetalleVenta(Request $request) : JsonResponse
@@ -75,7 +89,7 @@ class WSDetalleVentaController extends AbstractController
         $this->getDoctrine()->getManager()->flush();
 
         return new JsonResponse(
-            ['status' => 'Calificacion actualizado'],
+            ['status' => 'Detalle Venta actualizado'],
             Response::HTTP_CREATED
         );
 

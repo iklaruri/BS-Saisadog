@@ -112,7 +112,7 @@ class WSVentaController extends AbstractController
         $entityManager->remove($detalleventa);
         $entityManager->remove($venta);
         $entityManager->flush();
-        return new JsonResponse(['status'=>'Usuario eliminado'], Response::HTTP_OK);
+        return new JsonResponse(['status'=>'Venta eliminado'], Response::HTTP_OK);
     }
 
     private function convertirJson($object) : JsonResponse
