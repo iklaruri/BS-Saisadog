@@ -18,9 +18,9 @@ class WSUsuarioController extends AbstractController
     /**
      * @Route("/ws/saisadog/usuario/login", name="ws/saisadog/login", methods={"POST"})
      */
-    public function login(Request $usuario) : JsonResponse
+    public function login(Request $request) : JsonResponse
     {
-        $data = json_decode($usuario->getContent(), true);
+        $data = json_decode($request->getContent(), true);
         $em = $this->getDoctrine()->getManager();
         $usuario = $em->getRepository(Usuario::class)->findOneBy(['usuario' => $data['usuario'],'password' => $data['password']]);
         $json = $this->convertirJson($usuario);
@@ -42,9 +42,9 @@ class WSUsuarioController extends AbstractController
     /**
      * @Route("/ws/saisadog/usuario/anadir", name="ws/saisadog/usuario/anadir", methods={"POST"})
      */
-    public function anadirUsuario(Request $usuario) : JsonResponse
+    public function anadirUsuario(Request $request) : JsonResponse
     {
-        $data = json_decode($usuario->getContent(), true);
+        $data = json_decode($request->getContent(), true);
         $em = $this->getDoctrine()->getManager();
 
         $usuarioExiste = $em->getRepository(Usuario::class)->findOneBy(['usuario' => $data['usuario']]);
@@ -80,9 +80,9 @@ class WSUsuarioController extends AbstractController
     /**
      * @Route("/ws/saisadog/usuario/actualizar", name="ws/saisadog/usuario/actualizar", methods={"PUT"})
      */
-    public function actualizarUsuario(Request $usuario) : JsonResponse
+    public function actualizarUsuario(Request $request) : JsonResponse
     {
-        $data = json_decode($usuario->getContent(), true);
+        $data = json_decode($request->getContent(), true);
         $em = $this->getDoctrine()->getManager();
 
         $usuario = $em->getRepository(Usuario::class)->findOneBy(['id' => $data['id']]);

@@ -37,7 +37,7 @@ class WSVentaController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $usuario = $em->getRepository(Usuario::class)->findOneBy(['id' => $codUsuario]);
-        $ventas = $em->getRepository(Venta::class)->findBy(['id' => $usuario->getId()]);
+        $ventas = $em->getRepository(Venta::class)->findBy(['codusuario' => $usuario->getId()]);
         $json = $this->convertirJson($ventas);
         return $json;
     }
@@ -46,9 +46,9 @@ class WSVentaController extends AbstractController
     /**
      * @Route("/ws/saisadog/venta/anadir", name="ws/venta/anadir", methods={"POST"})
      */
-    public function anadirVenta(Request $venta) : JsonResponse
+    public function anadirVenta(Request $request) : JsonResponse
     {
-        $data = json_decode($venta->getContent(), true);
+        $data = json_decode($request->getContent(), true);
         $em = $this->getDoctrine()->getManager();
 
         $usuario = $em->getRepository(Usuario::class)->findOneBy(['id' => $data['codUsuario']]);
@@ -72,9 +72,9 @@ class WSVentaController extends AbstractController
     /**
      * @Route("/ws/saisadog/venta/actualizar", name="ws/saisadog/venta/actualizar", methods={"PUT"})
      */
-    public function actualizarVenta(Request $venta) : JsonResponse
+    public function actualizarVenta(Request $request) : JsonResponse
     {
-        $data = json_decode($venta->getContent(), true);
+        $data = json_decode($request->getContent(), true);
         $em = $this->getDoctrine()->getManager();
 
         $venta = $em->getRepository(Venta::class)->findOneBy(['id' => $data['id']]);
@@ -107,9 +107,14 @@ class WSVentaController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $venta = $entityManager->getRepository(Venta::class)
             ->findOneBy(['id' => $id]);
-        $detalleventa = $entityManager->getRepository(DetalleVenta::class)
+        $detalleVentas = $entityManager->getRepository(DetalleVenta::class)
             ->findBy(['codventa' => $venta->getId()]);
-        $entityManager->remove($detalleventa);
+
+        foreach ($detalleVentas as $detalleVenta)
+        {
+            $entityManager->remove($detalleVenta);
+        }
+
         $entityManager->remove($venta);
         $entityManager->flush();
         return new JsonResponse(['status'=>'Venta eliminado'], Response::HTTP_OK);

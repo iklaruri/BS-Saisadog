@@ -5,25 +5,38 @@ namespace App\Controller;
 use App\Entity\DetalleVenta;
 use App\Entity\Producto;
 use App\Entity\Venta;
-use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
+
 
 class WSDetalleVentaController extends AbstractController
 {
-    /**
-     * @Route("/ws/saisadog/detalleVenta/obtener/{codVenta}", name="ws/detalleVenta/obtener/venta", methods={"GET"})
-     */
-    public function getDetalleVentas($codVenta) : JsonResponse
-    {
 
+    /**
+     * @Route("/ws/saisadog/detalleVenta/obtener", name="ws/detalleVenta/obtenerTodos", methods={"GET"})
+     */
+    public function getDetalleVentas() : JsonResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $detalleVentas = $em->getRepository(DetalleVenta::class)->findAll();
+        $json = $this->convertirJson($detalleVentas);
+        return $json;
+    }
+
+
+
+    /**
+     * @Route("/ws/saisadog/detalleVenta/obtener/{codVenta}", name="ws/detalleVenta/obtener/codVenta", methods={"GET"})
+     */
+    public function getDetalleVentasPorVenta($codVenta) : JsonResponse
+    {
         $em = $this->getDoctrine()->getManager();
         $detalleVentas = $em->getRepository(DetalleVenta::class)->findBy(['codventa' => $codVenta]);
         $json = $this->convertirJson($detalleVentas);
@@ -33,18 +46,18 @@ class WSDetalleVentaController extends AbstractController
     /**
      * @Route("/ws/saisadog/detalleVenta/anadir", name="ws/detalleVenta/anadir/venta", methods={"POST"})
      */
-    public function anadirDetalleVenta(Request $detalleVenta) : JsonResponse
+    public function anadirDetalleVenta(Request $request) : JsonResponse
     {
-        $data = json_decode($detalleVenta->getContent(), true);
+        $data = json_decode($request->getContent(), true);
         $em = $this->getDoctrine()->getManager();
 
         $venta = $em->getRepository(Venta::class)->findOneBy(['id' => $data['codVenta']]);
         $producto = $em->getRepository(Producto::class)->findOneBy(['id' => $data['codProducto']]);
 
         $detalleVentaNuevo = new DetalleVenta(
+            $data['cantidad'],
             $producto,
-            $venta,
-            $data['cantidad']
+            $venta
         );
 
         $this->getDoctrine()->getManager()->persist($detalleVentaNuevo);

@@ -31,9 +31,9 @@ class WSArtistaController extends AbstractController
     /**
      * @Route("/ws/saisadog/artista/anadir", name="ws/artista/anadir", methods={"POST"})
      */
-    public function anadirArtista(Request $artista) : JsonResponse
+    public function anadirArtista(Request $request) : JsonResponse
     {
-        $data = json_decode($artista->getContent(), true);
+        $data = json_decode($request->getContent(), true);
         $em = $this->getDoctrine()->getManager();
 
         $artista = $em->getRepository(Artista::class)->findOneBy(['nombre' => $data['nombre']]);
@@ -65,9 +65,9 @@ class WSArtistaController extends AbstractController
     /**
      * @Route("/ws/saisadog/artista/actualizar", name="ws/artista/actualizar", methods={"PUT"})
      */
-    public function artistaActualizar(Request $artista) : JsonResponse
+    public function actualizarArtista(Request $request) : JsonResponse
     {
-        $data = json_decode($artista->getContent(), true);
+        $data = json_decode($request->getContent(), true);
         $em = $this->getDoctrine()->getManager();
 
         $artista = $em->getRepository(Artista::class)->findOneBy(['id' => $data['id']]);

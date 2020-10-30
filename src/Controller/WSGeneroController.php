@@ -31,9 +31,9 @@ class WSGeneroController extends AbstractController
     /**
      * @Route("/ws/saisadog/genero/anadir", name="ws/genero/anadir", methods={"POST"})
      */
-    public function anadirGenero(Request $genero) : JsonResponse
+    public function anadirGenero(Request $request) : JsonResponse
     {
-        $data = json_decode($genero->getContent(), true);
+        $data = json_decode($request->getContent(), true);
         $em = $this->getDoctrine()->getManager();
 
         $genero = $em->getRepository(Genero::class)->findOneBy(['nombre' => $data['nombre']]);
@@ -64,9 +64,9 @@ class WSGeneroController extends AbstractController
     /**
      * @Route("/ws/saisadog/genero/actualizar", name="ws/genero/actualizar", methods={"PUT"})
      */
-    public function generoActualizar(Request $genero) : JsonResponse
+    public function actualizarGenero(Request $request) : JsonResponse
     {
-        $data = json_decode($genero->getContent(), true);
+        $data = json_decode($request->getContent(), true);
         $em = $this->getDoctrine()->getManager();
 
         $genero = $em->getRepository(Genero::class)->findOneBy(['id' => $data['id']]);

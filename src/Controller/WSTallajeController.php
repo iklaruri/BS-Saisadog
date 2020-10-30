@@ -30,9 +30,9 @@ class WSTallajeController extends AbstractController
     /**
      * @Route("/ws/saisadog/tallaje/anadir", name="ws/tallajr/anadir", methods={"POST"})
      */
-    public function anadirTallaje(Request $tallaje) : JsonResponse
+    public function anadirTallaje(Request $request) : JsonResponse
     {
-        $data = json_decode($tallaje->getContent(), true);
+        $data = json_decode($request->getContent(), true);
         $em = $this->getDoctrine()->getManager();
 
         $tallaje = $em->getRepository(Tallaje::class)->findOneBy(['nombre' => $data['nombre']]);
@@ -63,9 +63,9 @@ class WSTallajeController extends AbstractController
     /**
      * @Route("/ws/saisadog/tallaje/actualizar", name="ws/tallaje/actualizar", methods={"PUT"})
      */
-    public function actualizarTallaje(Request $tallaje) : JsonResponse
+    public function actualizarTallaje(Request $request) : JsonResponse
     {
-        $data = json_decode($tallaje->getContent(), true);
+        $data = json_decode($request->getContent(), true);
         $em = $this->getDoctrine()->getManager();
 
         $tallaje = $em->getRepository(Tallaje::class)->findOneBy(['id' => $data['id']]);
