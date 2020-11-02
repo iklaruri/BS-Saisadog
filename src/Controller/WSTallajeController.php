@@ -20,8 +20,8 @@ class WSTallajeController extends AbstractController
      */
     public function getTallajes() : JsonResponse
     {
-        $em = $this->getDoctrine()->getManager();
-        $tallas = $em->getRepository(Tallaje::class)->findAll();
+        $entityManager = $this->getDoctrine()->getManager();
+        $tallas = $entityManager->getRepository(Tallaje::class)->findAll();
         $json = $this->convertirJson($tallas);
         return $json;
     }
@@ -33,9 +33,9 @@ class WSTallajeController extends AbstractController
     public function anadirTallaje(Request $request) : JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $em = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
 
-        $tallaje = $em->getRepository(Tallaje::class)->findOneBy(['nombre' => $data['nombre']]);
+        $tallaje = $entityManager->getRepository(Tallaje::class)->findOneBy(['nombre' => $data['nombre']]);
 
         if($tallaje)
         {
@@ -66,9 +66,9 @@ class WSTallajeController extends AbstractController
     public function actualizarTallaje(Request $request) : JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $em = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
 
-        $tallaje = $em->getRepository(Tallaje::class)->findOneBy(['id' => $data['id']]);
+        $tallaje = $entityManager->getRepository(Tallaje::class)->findOneBy(['id' => $data['id']]);
 
         if($tallaje)
         {

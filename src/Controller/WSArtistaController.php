@@ -21,8 +21,19 @@ class WSArtistaController extends AbstractController
      */
     public function getArtistas() : JsonResponse
     {
-        $em = $this->getDoctrine()->getManager();
-        $artistas = $em->getRepository(Artista::class)->findAll();
+        $entityManager = $this->getDoctrine()->getManager();
+        $artistas = $entityManager->getRepository(Artista::class)->findAll();
+        $json = $this->convertirJson($artistas);
+        return $json;
+    }
+
+    /**
+     * @Route("/ws/saisadog/artista/obtener/{id}", name="ws/artista/obtener/id", methods={"GET"})
+     */
+    public function getArtista($id) : JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $artistas = $entityManager->getRepository(Artista::class)->findOneBy(['id' => $id]);
         $json = $this->convertirJson($artistas);
         return $json;
     }
@@ -34,9 +45,9 @@ class WSArtistaController extends AbstractController
     public function anadirArtista(Request $request) : JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $em = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
 
-        $artista = $em->getRepository(Artista::class)->findOneBy(['nombre' => $data['nombre']]);
+        $artista = $entityManager->getRepository(Artista::class)->findOneBy(['nombre' => $data['nombre']]);
 
         if($artista)
         {
@@ -48,7 +59,7 @@ class WSArtistaController extends AbstractController
         {
             $artistaNuevo = new Artista(
                 $data['nombre'],
-                \DateTime::createFromFormat('Y/m/d', $data['fechaFundacion'])
+                \DateTime::createFromFormat('Y-m-d', $data['fechaFundacion'])
             );
 
             $this->getDoctrine()->getManager()->persist($artistaNuevo);
@@ -68,14 +79,14 @@ class WSArtistaController extends AbstractController
     public function actualizarArtista(Request $request) : JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $em = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
 
-        $artista = $em->getRepository(Artista::class)->findOneBy(['id' => $data['id']]);
+        $artista = $entityManager->getRepository(Artista::class)->findOneBy(['id' => $data['id']]);
 
         if($artista)
         {
             $artista->setNombre($data['nombre']);
-            $artista->setFechafundacion( \DateTime::createFromFormat('Y/m/d', $data['fechaFundacion']));
+            $artista->setFechafundacion( \DateTime::createFromFormat('Y-m-d', $data['fechaFundacion']));
 
             $this->getDoctrine()->getManager()->persist($artista);
             $this->getDoctrine()->getManager()->flush();

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Producto;
+use App\Entity\ProductoGenero;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,19 +21,31 @@ class WSProductoController extends AbstractController
      */
     public function getProductos() : JsonResponse
     {
-        $em = $this->getDoctrine()->getManager();
-        $productos = $em->getRepository(Producto::class)->findAll();
+        $entityManager = $this->getDoctrine()->getManager();
+        $productos = $entityManager->getRepository(Producto::class)->findAll();
         $json = $this->convertirJson($productos);
         return $json;
     }
+
+    /**
+     * @Route("/ws/saisadog/producto/obtenerPorGenero/{codGenero}", name="ws/producto/obtenePorGenero/codGenero", methods={"GET"})
+     */
+    public function getProductosPorGenero($codGenero) : JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $productos = $entityManager->getRepository(ProductoGenero::class)->findProductosByGenero($codGenero);
+        $json = $this->convertirJson($productos);
+        return $json;
+    }
+
 
     /**
      * @Route("/ws/saisadog/producto/obtenerPorArtista/{codArtista}", name="ws/producto/obtenePorArtista/codArtista", methods={"GET"})
      */
     public function getProductosPorArtista($codArtista) : JsonResponse
     {
-        $em = $this->getDoctrine()->getManager();
-        $productos = $em->getRepository(Producto::class)->findBy(['codartista' => $codArtista]);
+        $entityManager = $this->getDoctrine()->getManager();
+        $productos = $entityManager->getRepository(Producto::class)->findProductosByArtista($codArtista);
         $json = $this->convertirJson($productos);
         return $json;
     }
@@ -42,8 +55,8 @@ class WSProductoController extends AbstractController
      */
     public function getProductosPorTipo($codTipo) : JsonResponse
     {
-        $em = $this->getDoctrine()->getManager();
-        $productos = $em->getRepository(Producto::class)->findBy(['codtipoProducto' => $codTipo]);
+        $entityManager = $this->getDoctrine()->getManager();
+        $productos = $entityManager->getRepository(Producto::class)->findProductosByTipo($codTipo);;
         $json = $this->convertirJson($productos);
         return $json;
     }

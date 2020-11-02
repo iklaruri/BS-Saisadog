@@ -36,6 +36,13 @@ class Historial
     private $fecha;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="esOferta", type="boolean", nullable=false)
+     */
+    private $esoferta;
+
+    /**
      * @var Producto
      *
      * @ORM\ManyToOne(targetEntity="Producto")
@@ -49,12 +56,14 @@ class Historial
      * Historial constructor.
      * @param float $precio
      * @param \DateTime $fecha
+     * @param bool $esoferta
      * @param Producto $codproducto
      */
-    public function __construct(float $precio, \DateTime $fecha, Producto $codproducto)
+    public function __construct(float $precio, \DateTime $fecha, bool $esoferta, Producto $codproducto)
     {
         $this->precio = $precio;
         $this->fecha = $fecha;
+        $this->esoferta = $esoferta;
         $this->codproducto = $codproducto;
     }
 
@@ -105,6 +114,23 @@ class Historial
     {
         $this->fecha = $fecha;
     }
+
+    /**
+     * @return bool
+     */
+    public function getEsoferta(): bool
+    {
+        return $this->esoferta;
+    }
+
+    /**
+     * @param bool $esoferta
+     */
+    public function setEsoferta(bool $esoferta): void
+    {
+        $this->esoferta = $esoferta;
+    }
+
 
     /**
      * @return Producto

@@ -36,8 +36,18 @@ class WSVentaController extends AbstractController
     public function getVentasPorUsuario($codUsuario) : JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
-        $usuario = $em->getRepository(Usuario::class)->findOneBy(['id' => $codUsuario]);
-        $ventas = $em->getRepository(Venta::class)->findBy(['codusuario' => $usuario->getId()]);
+        $ventas = $em->getRepository(DetalleVenta::class)->findVentasByUsuario($codUsuario);
+        $json = $this->convertirJson($ventas);
+        return $json;
+    }
+
+    /**
+     * @Route("/ws/saisadog/venta/obtener/{codUsuario}/{fecha}", name="ws/venta/obtener/usuario/fecha", methods={"GET"})
+     */
+    public function getVentasPorUsuarioYFecha($codUsuario,$fecha) : JsonResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ventas = $em->getRepository(DetalleVenta::class)->findVentasByUsuarioFecha($codUsuario,$fecha);
         $json = $this->convertirJson($ventas);
         return $json;
     }
@@ -55,7 +65,7 @@ class WSVentaController extends AbstractController
 
         $ventaNuevo = new Venta(
             $data['precioFinal'],
-            \DateTime::createFromFormat('Y/m/d H:i:s', $data['fecha']),
+            \DateTime::createFromFormat('Y-m-d H:i:s', $data['fecha']),
             $usuario
         );
 
@@ -82,7 +92,7 @@ class WSVentaController extends AbstractController
         if($venta)
         {
             $venta->setPreciofinal($data['precioFinal']);
-            $venta->setFecha( \DateTime::createFromFormat('Y/m/d H:i:s', $data['fecha']));
+            $venta->setFecha( \DateTime::createFromFormat('Y-m-d H:i:s', $data['fecha']));
 
             $this->getDoctrine()->getManager()->persist($venta);
             $this->getDoctrine()->getManager()->flush();

@@ -20,39 +20,15 @@ class WSDetalleVentaController extends AbstractController
 {
 
     /**
-     * @Route("/ws/saisadog/detalleVenta/obtener", name="ws/detalleVenta/obtenerTodos", methods={"GET"})
-     */
-    public function getDetalleVentas() : JsonResponse
-    {
-        $em = $this->getDoctrine()->getManager();
-        $detalleVentas = $em->getRepository(DetalleVenta::class)->findAll();
-        $json = $this->convertirJson($detalleVentas);
-        return $json;
-    }
-
-
-
-    /**
-     * @Route("/ws/saisadog/detalleVenta/obtener/{codVenta}", name="ws/detalleVenta/obtener/codVenta", methods={"GET"})
-     */
-    public function getDetalleVentasPorVenta($codVenta) : JsonResponse
-    {
-        $em = $this->getDoctrine()->getManager();
-        $detalleVentas = $em->getRepository(DetalleVenta::class)->findBy(['codventa' => $codVenta]);
-        $json = $this->convertirJson($detalleVentas);
-        return $json;
-    }
-
-    /**
      * @Route("/ws/saisadog/detalleVenta/anadir", name="ws/detalleVenta/anadir/venta", methods={"POST"})
      */
     public function anadirDetalleVenta(Request $request) : JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $em = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
 
-        $venta = $em->getRepository(Venta::class)->findOneBy(['id' => $data['codVenta']]);
-        $producto = $em->getRepository(Producto::class)->findOneBy(['id' => $data['codProducto']]);
+        $venta = $entityManager->getRepository(Venta::class)->findOneBy(['id' => $data['codVenta']]);
+        $producto = $entityManager->getRepository(Producto::class)->findOneBy(['id' => $data['codProducto']]);
 
         $detalleVentaNuevo = new DetalleVenta(
             $data['cantidad'],
@@ -71,13 +47,14 @@ class WSDetalleVentaController extends AbstractController
 
 
     /**
-     * @Route("/ws/saisadog/detalleVenta/eliminar/{id}", name="ws/saisadog/detalleVenta/eliminar", methods={"DELETE"})
+     * @Route("/ws/saisadog/detalleVenta/eliminar", name="ws/saisadog/detalleVenta/eliminar", methods={"DELETE"})
      */
-    public function eliminarDetalleVenta($id) : JsonResponse
+    public function eliminarDetalleVenta(Request $request) : JsonResponse
     {
+        $data = json_decode($request->getContent(), true);
         $entityManager = $this->getDoctrine()->getManager();
         $detalleventa = $entityManager->getRepository(DetalleVenta::class)
-            ->findOneBy(['id' => $id]);
+            ->findOneBy(['id' => $data['id']]);
         $entityManager->remove($detalleventa);
         $entityManager->flush();
         return new JsonResponse(['status'=>'DetalleVenta eliminado'], Response::HTTP_OK);
@@ -90,12 +67,12 @@ class WSDetalleVentaController extends AbstractController
     public function actualizarDetalleVenta(Request $request) : JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $em = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
 
-        $venta = $em->getRepository(Venta::class)->findOneBy(['id' => $data['codVenta']]);
-        $producto = $em->getRepository(Producto::class)->findOneBy(['id' => $data['codProducto']]);
+        $venta = $entityManager->getRepository(Venta::class)->findOneBy(['id' => $data['codVenta']]);
+        $producto = $entityManager->getRepository(Producto::class)->findOneBy(['id' => $data['codProducto']]);
 
-        $detalleVenta = $em->getRepository(DetalleVenta::class)->findOneBy(['codventa' => $venta->getId(),'codproducto' => $producto->getId()]);
+        $detalleVenta = $entityManager->getRepository(DetalleVenta::class)->findOneBy(['codventa' => $venta->getId(),'codproducto' => $producto->getId()]);
 
         $detalleVenta->setCantidad($data['cantidad']);
         $this->getDoctrine()->getManager()->persist($detalleVenta);

@@ -21,8 +21,8 @@ class WSGeneroController extends AbstractController
      */
     public function getGeneros() : JsonResponse
     {
-        $em = $this->getDoctrine()->getManager();
-        $generos = $em->getRepository(Genero::class)->findAll();
+        $entityManager = $this->getDoctrine()->getManager();
+        $generos = $entityManager->getRepository(Genero::class)->findAll();
         $json = $this->convertirJson($generos);
         return $json;
     }
@@ -34,9 +34,9 @@ class WSGeneroController extends AbstractController
     public function anadirGenero(Request $request) : JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $em = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
 
-        $genero = $em->getRepository(Genero::class)->findOneBy(['nombre' => $data['nombre']]);
+        $genero = $entityManager->getRepository(Genero::class)->findOneBy(['nombre' => $data['nombre']]);
 
         if($genero)
         {
@@ -67,9 +67,9 @@ class WSGeneroController extends AbstractController
     public function actualizarGenero(Request $request) : JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $em = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
 
-        $genero = $em->getRepository(Genero::class)->findOneBy(['id' => $data['id']]);
+        $genero = $entityManager->getRepository(Genero::class)->findOneBy(['id' => $data['id']]);
 
         if($genero)
         {

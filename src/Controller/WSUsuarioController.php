@@ -21,8 +21,8 @@ class WSUsuarioController extends AbstractController
     public function login(Request $request) : JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $em = $this->getDoctrine()->getManager();
-        $usuario = $em->getRepository(Usuario::class)->findOneBy(['usuario' => $data['usuario'],'password' => $data['password']]);
+        $entityManager = $this->getDoctrine()->getManager();
+        $usuario = $entityManager->getRepository(Usuario::class)->findOneBy(['usuario' => $data['usuario'],'password' => $data['password']]);
         $json = $this->convertirJson($usuario);
         return $json;
     }
@@ -32,8 +32,8 @@ class WSUsuarioController extends AbstractController
      */
     public function getUsuarios() : JsonResponse
     {
-        $em = $this->getDoctrine()->getManager();
-        $usuarios = $em->getRepository(Usuario::class)->findAll();
+        $entityManager = $this->getDoctrine()->getManager();
+        $usuarios = $entityManager->getRepository(Usuario::class)->findAll();
         $json = $this->convertirJson($usuarios);
         return $json;
     }
@@ -45,9 +45,9 @@ class WSUsuarioController extends AbstractController
     public function anadirUsuario(Request $request) : JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $em = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
 
-        $usuarioExiste = $em->getRepository(Usuario::class)->findOneBy(['usuario' => $data['usuario']]);
+        $usuarioExiste = $entityManager->getRepository(Usuario::class)->findOneBy(['usuario' => $data['usuario']]);
 
         if($usuarioExiste)
         {
@@ -68,7 +68,7 @@ class WSUsuarioController extends AbstractController
             $this->getDoctrine()->getManager()->persist($usuarioNuevo);
             $this->getDoctrine()->getManager()->flush();
 
-            $usuarioCreado = $em->getRepository(Usuario::class)->findOneBy(['usuario' => $data['usuario']]);
+            $usuarioCreado = $entityManager->getRepository(Usuario::class)->findOneBy(['usuario' => $data['usuario']]);
             return new JsonResponse(
                 ['status' => 'Usuario creado', 'usuario' => $usuarioCreado],
                 Response::HTTP_CREATED
@@ -83,9 +83,9 @@ class WSUsuarioController extends AbstractController
     public function actualizarUsuario(Request $request) : JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $em = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
 
-        $usuario = $em->getRepository(Usuario::class)->findOneBy(['id' => $data['id']]);
+        $usuario = $entityManager->getRepository(Usuario::class)->findOneBy(['id' => $data['id']]);
 
         if($usuario)
         {
