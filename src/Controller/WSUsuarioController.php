@@ -27,17 +27,6 @@ class WSUsuarioController extends AbstractController
         return $json;
     }
 
-    /**
-     * @Route("/ws/saisadog/usuario/obtener", name="ws/usuarios/obtenerTodos", methods={"GET"})
-     */
-    public function getUsuarios() : JsonResponse
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $usuarios = $entityManager->getRepository(Usuario::class)->findAll();
-        $json = $this->convertirJson($usuarios);
-        return $json;
-    }
-
 
     /**
      * @Route("/ws/saisadog/usuario/anadir", name="ws/saisadog/usuario/anadir", methods={"POST"})
@@ -62,7 +51,8 @@ class WSUsuarioController extends AbstractController
                 $data['direccion'],
                 $data['email'],
                 $data['tlf'],
-                $data['password']
+                $data['password'],
+                $data['foto']
             );
 
             $this->getDoctrine()->getManager()->persist($usuarioNuevo);
@@ -94,18 +84,19 @@ class WSUsuarioController extends AbstractController
             $usuario->setTlf($data['tlf']);
             $usuario->setPassword($data['password']);
             $usuario->setUsuario($data['usuario']);
+            $usuario->setFoto($data['foto']);
 
             $this->getDoctrine()->getManager()->persist($usuario);
             $this->getDoctrine()->getManager()->flush();
 
             return new JsonResponse(
                 ['status' => 'Actualizado', 'usuarioActualizado' => $usuario],
-                Response::HTTP_CREATED
+                Response::HTTP_OK
             );
         }else{
             return new JsonResponse(
                 ['status' => 'No se ha podido actualizar'],
-                Response::HTTP_NOT_FOUND
+                Response::HTTP_NO_CONTENT
             );
         }
     }

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Historial
  *
  * @ORM\Table(name="Historial", indexes={@ORM\Index(name="codProducto", columns={"codProducto"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\HistorialRepository")
  */
 class Historial
 {
@@ -36,6 +36,13 @@ class Historial
     private $fecha;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_fin", type="datetime", nullable=true)
+     */
+    private $fechafin;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="esOferta", type="boolean", nullable=false)
@@ -59,7 +66,7 @@ class Historial
      * @param bool $esoferta
      * @param Producto $codproducto
      */
-    public function __construct(float $precio, \DateTime $fecha, bool $esoferta, Producto $codproducto)
+    public function __construct(float $precio, \DateTime $fecha, bool $esoferta,Producto $codproducto)
     {
         $this->precio = $precio;
         $this->fecha = $fecha;
@@ -113,6 +120,22 @@ class Historial
     public function setFecha(\DateTime $fecha): void
     {
         $this->fecha = $fecha;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getFechafin(): \DateTime
+    {
+        return $this->fechafin;
+    }
+
+    /**
+     * @param \DateTime $fechafin
+     */
+    public function setFechafin(\DateTime $fechafin): void
+    {
+        $this->fechafin = $fechafin;
     }
 
     /**

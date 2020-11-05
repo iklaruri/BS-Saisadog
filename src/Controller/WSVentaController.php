@@ -19,27 +19,6 @@ use Symfony\Component\Serializer\Serializer;
 class WSVentaController extends AbstractController
 {
 
-    /**
-     * @Route("/ws/saisadog/venta/obtener", name="ws/venta/obtener", methods={"GET"})
-     */
-    public function getVentas() : JsonResponse
-    {
-        $em = $this->getDoctrine()->getManager();
-        $ventas = $em->getRepository(Venta::class)->findAll();
-        $json = $this->convertirJson($ventas);
-        return $json;
-    }
-
-    /**
-     * @Route("/ws/saisadog/venta/obtener/{codUsuario}", name="ws/venta/obtener/usuario", methods={"GET"})
-     */
-    public function getVentasPorUsuario($codUsuario) : JsonResponse
-    {
-        $em = $this->getDoctrine()->getManager();
-        $ventas = $em->getRepository(DetalleVenta::class)->findVentasByUsuario($codUsuario);
-        $json = $this->convertirJson($ventas);
-        return $json;
-    }
 
     /**
      * @Route("/ws/saisadog/venta/obtener/{codUsuario}/{fecha}", name="ws/venta/obtener/usuario/fecha", methods={"GET"})
@@ -64,7 +43,6 @@ class WSVentaController extends AbstractController
         $usuario = $em->getRepository(Usuario::class)->findOneBy(['id' => $data['codUsuario']]);
 
         $ventaNuevo = new Venta(
-            $data['precioFinal'],
             \DateTime::createFromFormat('Y-m-d H:i:s', $data['fecha']),
             $usuario
         );
@@ -115,19 +93,24 @@ class WSVentaController extends AbstractController
     public function eliminarVenta($id) : JsonResponse
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $venta = $entityManager->getRepository(Venta::class)
-            ->findOneBy(['id' => $id]);
-        $detalleVentas = $entityManager->getRepository(DetalleVenta::class)
-            ->findBy(['codventa' => $venta->getId()]);
+        $venta = $entityManager->getRepository(Venta::class)->findOneBy(['id' => $id]);
+        $detalleVentas = $entityManager->getRepository(DetalleVenta::class)->findBy(['codventa' => $venta->getId()]);
 
-        foreach ($detalleVentas as $detalleVenta)
+        if($detalleVentas != null)
         {
-            $entityManager->remove($detalleVenta);
-        }
+            foreach ($detalleVentas as $detalleVenta)
+            {
+                $entityManager->remove($detalleVenta);
+            }
 
-        $entityManager->remove($venta);
-        $entityManager->flush();
-        return new JsonResponse(['status'=>'Venta eliminado'], Response::HTTP_OK);
+            $entityManager->remove($venta);
+            $entityManager->flush();
+
+            return new JsonResponse(['status'=>'Venta eliminado'], Response::HTTP_OK);
+        }else
+        {
+            return new JsonResponse(['status'=>'No se ha podido eliminar'], Response::HTTP_NO_CONTENT);
+        }
     }
 
     private function convertirJson($object) : JsonResponse

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Artista
  *
  * @ORM\Table(name="Artista")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\ArtistaRepository")
  */
 class Artista
 {
@@ -36,14 +36,23 @@ class Artista
     private $fechafundacion;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="foto", type="string", length=500, nullable=false)
+     */
+    private $foto;
+
+    /**
      * Artista constructor.
      * @param string $nombre
      * @param \DateTime $fechafundacion
+     * @param string $foto
      */
-    public function __construct(string $nombre, \DateTime $fechafundacion)
+    public function __construct(string $nombre, \DateTime $fechafundacion, string $foto)
     {
         $this->nombre = $nombre;
         $this->fechafundacion = $fechafundacion;
+        $this->foto = $foto;
     }
 
 
@@ -95,7 +104,20 @@ class Artista
         $this->fechafundacion = $fechafundacion;
     }
 
+    /**
+     * @return string
+     */
+    public function getFoto(): string
+    {
+        return $this->foto;
+    }
 
-
+    /**
+     * @param string $foto
+     */
+    public function setFoto(string $foto): void
+    {
+        $this->foto = $foto;
+    }
 
 }

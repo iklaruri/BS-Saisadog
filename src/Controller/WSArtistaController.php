@@ -16,28 +16,17 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class WSArtistaController extends AbstractController
 {
+
     /**
-     * @Route("/ws/saisadog/artista/obtener", name="ws/artista/obtener", methods={"GET"})
+     * @Route("/ws/saisadog/artista/obtenerNovedades", name="ws/artista/obtenerNovedades", methods={"GET"})
      */
-    public function getArtistas() : JsonResponse
+    public function getArtistasNovedades() : JsonResponse
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $artistas = $entityManager->getRepository(Artista::class)->findAll();
+        $artistas = $entityManager->getRepository(Artista::class)->findArtistasNovedades();
         $json = $this->convertirJson($artistas);
         return $json;
     }
-
-    /**
-     * @Route("/ws/saisadog/artista/obtener/{id}", name="ws/artista/obtener/id", methods={"GET"})
-     */
-    public function getArtista($id) : JsonResponse
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $artistas = $entityManager->getRepository(Artista::class)->findOneBy(['id' => $id]);
-        $json = $this->convertirJson($artistas);
-        return $json;
-    }
-
 
     /**
      * @Route("/ws/saisadog/artista/anadir", name="ws/artista/anadir", methods={"POST"})
@@ -59,7 +48,8 @@ class WSArtistaController extends AbstractController
         {
             $artistaNuevo = new Artista(
                 $data['nombre'],
-                \DateTime::createFromFormat('Y-m-d', $data['fechaFundacion'])
+                \DateTime::createFromFormat('Y', $data['fechaFundacion']),
+                $data['foto']
             );
 
             $this->getDoctrine()->getManager()->persist($artistaNuevo);
@@ -86,19 +76,20 @@ class WSArtistaController extends AbstractController
         if($artista)
         {
             $artista->setNombre($data['nombre']);
-            $artista->setFechafundacion( \DateTime::createFromFormat('Y-m-d', $data['fechaFundacion']));
+            $artista->setFechafundacion( \DateTime::createFromFormat('Y', $data['fechaFundacion']));
+            $artista->setFoto($data['foto']);
 
             $this->getDoctrine()->getManager()->persist($artista);
             $this->getDoctrine()->getManager()->flush();
 
             return new JsonResponse(
                 ['status' => 'Actualizado', 'artistaActualizado' => $artista],
-                Response::HTTP_CREATED
+                Response::HTTP_OK
             );
         }else{
             return new JsonResponse(
                 ['status' => 'No se ha podido actualizar'],
-                Response::HTTP_NOT_FOUND
+                Response::HTTP_NO_CONTENT
             );
         }
     }
@@ -110,7 +101,7 @@ class WSArtistaController extends AbstractController
         $normalizar = [new DateTimeNormalizer(), new ObjectNormalizer()];
         $serializer = new Serializer($normalizar, $encoders);
         $normalizado = $serializer->normalize($object, null,
-            array(DateTimeNormalizer::FORMAT_KEY => 'Y/m/d'));
+            array(DateTimeNormalizer::FORMAT_KEY => 'Y'));
         $jsonContent = $serializer->serialize($normalizado, 'json');
         return JsonResponse::fromJsonString($jsonContent, Response::HTTP_OK);
     }

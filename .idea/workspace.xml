@@ -10,11 +10,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d0ad655-a457-463e-95b0-4595316f5314" name="Default Changelist" comment="First commit">
-      <change afterPath="$PROJECT_DIR$/src/Repository/DetalleVentaRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/ProductoGeneroRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/ProductoRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/TallaRepository.php" afterDir="false" />
+    <list default="true" id="2d0ad655-a457-463e-95b0-4595316f5314" name="Default Changelist" comment="Second commit">
+      <change afterPath="$PROJECT_DIR$/src/Repository/ArtistaRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/HistorialRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/VentaRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/WSArtistaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WSArtistaController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/WSDetalleVentaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WSDetalleVentaController.php" afterDir="false" />
@@ -23,10 +22,14 @@
       <change beforePath="$PROJECT_DIR$/src/Controller/WSTallajeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WSTallajeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/WSUsuarioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WSUsuarioController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/WSVentaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WSVentaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/DetalleVenta.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/DetalleVenta.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Artista.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Artista.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Historial.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Historial.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Producto.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Producto.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/ProductoGenero.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/ProductoGenero.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Talla.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Talla.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Usuario.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Usuario.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Venta.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Venta.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/DetalleVentaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/DetalleVentaRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/ProductoRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ProductoRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/TallaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/TallaRepository.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,7 +191,13 @@
       <workItem from="1603962468060" duration="2495000" />
       <workItem from="1603965199247" duration="7765000" />
       <workItem from="1603974319555" duration="13509000" />
-      <workItem from="1604054231487" duration="24388000" />
+      <workItem from="1604054231487" duration="24541000" />
+      <workItem from="1604390688236" duration="2770000" />
+      <workItem from="1604394136432" duration="5402000" />
+      <workItem from="1604401622348" duration="5790000" />
+      <workItem from="1604407639595" duration="14919000" />
+      <workItem from="1604490495393" duration="17493000" />
+      <workItem from="1604576262900" duration="4665000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1603977184015</created>
@@ -211,7 +220,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604062357392</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Second commit">
+      <created>1604322920550</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1604322920550</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -231,44 +247,49 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="First commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="First commit" />
+    <MESSAGE value="Second commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Second commit" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="804" y="332" width="451" height="604" key="#com.intellij.ide.util.MemberChooser" timestamp="1604319635151">
+    <state x="804" y="332" width="451" height="604" key="#com.intellij.ide.util.MemberChooser" timestamp="1604493156540">
       <screen x="72" y="27" width="1848" height="1173" />
     </state>
-    <state x="804" y="332" width="451" height="604" key="#com.intellij.ide.util.MemberChooser/72.27.1848.1173@72.27.1848.1173" timestamp="1604319635151" />
+    <state x="804" y="332" width="451" height="604" key="#com.intellij.ide.util.MemberChooser/72.27.1848.1173@72.27.1848.1173" timestamp="1604493156540" />
     <state x="72" y="27" width="1278" height="1173" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1604058314140">
       <screen x="72" y="27" width="1848" height="1173" />
     </state>
     <state x="72" y="27" width="1278" height="1173" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/72.27.1848.1173@72.27.1848.1173" timestamp="1604058314140" />
-    <state x="729" y="371" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1604319650518">
+    <state x="729" y="371" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1604580613794">
       <screen x="72" y="27" width="1848" height="1173" />
     </state>
-    <state x="729" y="371" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/72.27.1848.1173@72.27.1848.1173" timestamp="1604319650518" />
-    <state x="779" y="371" width="447" height="491" key="FileChooserDialogImpl" timestamp="1604310926460">
+    <state x="729" y="371" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/72.27.1848.1173@72.27.1848.1173" timestamp="1604580613794" />
+    <state x="779" y="371" width="447" height="491" key="FileChooserDialogImpl" timestamp="1604565575205">
       <screen x="72" y="27" width="1848" height="1173" />
     </state>
-    <state x="779" y="371" width="447" height="491" key="FileChooserDialogImpl/72.27.1848.1173@72.27.1848.1173" timestamp="1604310926460" />
+    <state x="779" y="371" width="447" height="491" key="FileChooserDialogImpl/72.27.1848.1173@72.27.1848.1173" timestamp="1604565575205" />
     <state x="579" y="350" width="824" height="533" key="IDE.errors.dialog" timestamp="1604059185096">
       <screen x="72" y="27" width="1848" height="1173" />
     </state>
     <state x="579" y="350" width="824" height="533" key="IDE.errors.dialog/72.27.1848.1173@72.27.1848.1173" timestamp="1604059185096" />
-    <state x="791" y="539" width="399" height="156" key="NewPhpFileDialog" timestamp="1604319587055">
+    <state x="722" y="333" width="537" height="568" key="NewPhpClassDialog" timestamp="1604563684843">
       <screen x="72" y="27" width="1848" height="1173" />
     </state>
-    <state x="791" y="539" width="399" height="156" key="NewPhpFileDialog/72.27.1848.1173@72.27.1848.1173" timestamp="1604319587055" />
+    <state x="722" y="333" width="537" height="568" key="NewPhpClassDialog/72.27.1848.1173@72.27.1848.1173" timestamp="1604563684843" />
+    <state x="791" y="539" width="399" height="156" key="NewPhpFileDialog" timestamp="1604489567049">
+      <screen x="72" y="27" width="1848" height="1173" />
+    </state>
+    <state x="791" y="539" width="399" height="156" key="NewPhpFileDialog/72.27.1848.1173@72.27.1848.1173" timestamp="1604489567049" />
     <state x="294" y="151" width="1022" height="737" key="SettingsEditor" timestamp="1603888972094">
       <screen x="72" y="27" width="1848" height="1173" />
     </state>
     <state x="294" y="151" width="1022" height="737" key="SettingsEditor/72.27.1848.1173@72.27.1848.1173" timestamp="1603888972094" />
-    <state x="591" y="349" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1604062365686">
+    <state x="591" y="349" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1604322931256">
       <screen x="72" y="27" width="1848" height="1173" />
     </state>
-    <state x="591" y="349" width="800" height="535" key="Vcs.Push.Dialog.v2/72.27.1848.1173@72.27.1848.1173" timestamp="1604062365686" />
-    <state x="659" y="289" width="672" height="678" key="search.everywhere.popup" timestamp="1604317997294">
+    <state x="591" y="349" width="800" height="535" key="Vcs.Push.Dialog.v2/72.27.1848.1173@72.27.1848.1173" timestamp="1604322931256" />
+    <state x="659" y="289" width="672" height="678" key="search.everywhere.popup" timestamp="1604560912133">
       <screen x="72" y="27" width="1848" height="1173" />
     </state>
-    <state x="659" y="289" width="672" height="678" key="search.everywhere.popup/72.27.1848.1173@72.27.1848.1173" timestamp="1604317997294" />
+    <state x="659" y="289" width="672" height="678" key="search.everywhere.popup/72.27.1848.1173@72.27.1848.1173" timestamp="1604560912133" />
   </component>
 </project>

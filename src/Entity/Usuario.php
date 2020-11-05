@@ -57,20 +57,29 @@ class Usuario
     private $password;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="foto", type="string", length=155, nullable=false)
+     */
+    private $foto;
+
+    /**
      * Usuario constructor.
      * @param string $usuario
      * @param string $direccion
      * @param string $email
      * @param string $tlf
      * @param string $password
+     * @param string $foto
      */
-    public function __construct(string $usuario, string $direccion, string $email, string $tlf, string $password)
+    public function __construct(string $usuario, string $direccion, string $email, string $tlf, string $password, string $foto)
     {
         $this->usuario = $usuario;
         $this->direccion = $direccion;
         $this->email = $email;
         $this->tlf = $tlf;
         $this->password = $password;
+        $this->foto = $foto;
     }
 
     /**
@@ -168,6 +177,24 @@ class Usuario
     {
         $this->password = $password;
     }
+
+    /**
+     * @return string
+     */
+    public function getFoto(): string
+    {
+        return $this->foto;
+    }
+
+    /**
+     * @param string $foto
+     */
+    public function setFoto(string $foto): void
+    {
+        $this->foto = $foto;
+    }
+
+
 
 
 }

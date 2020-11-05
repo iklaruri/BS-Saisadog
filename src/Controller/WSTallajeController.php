@@ -15,20 +15,9 @@ use Symfony\Component\Serializer\Serializer;
 
 class WSTallajeController extends AbstractController
 {
-    /**
-     * @Route("/ws/saisadog/tallaje/obtener", name="ws/tallaje/obtenerTodos", methods={"GET"})
-     */
-    public function getTallajes() : JsonResponse
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $tallas = $entityManager->getRepository(Tallaje::class)->findAll();
-        $json = $this->convertirJson($tallas);
-        return $json;
-    }
-
 
     /**
-     * @Route("/ws/saisadog/tallaje/anadir", name="ws/tallajr/anadir", methods={"POST"})
+     * @Route("/ws/saisadog/tallaje/anadir", name="ws/tallaje/anadir", methods={"POST"})
      */
     public function anadirTallaje(Request $request) : JsonResponse
     {

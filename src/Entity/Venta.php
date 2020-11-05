@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Venta
  *
  * @ORM\Table(name="Venta", indexes={@ORM\Index(name="codUsuario", columns={"codUsuario"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\VentaRepository")
  */
 class Venta
 {
@@ -20,13 +20,6 @@ class Venta
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="precioFinal", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $preciofinal;
 
     /**
      * @var \DateTime
@@ -47,13 +40,11 @@ class Venta
 
     /**
      * Venta constructor.
-     * @param float $preciofinal
      * @param \DateTime $fecha
      * @param Usuario $codusuario
      */
-    public function __construct(float $preciofinal, \DateTime $fecha, Usuario $codusuario)
+    public function __construct(\DateTime $fecha, Usuario $codusuario)
     {
-        $this->preciofinal = $preciofinal;
         $this->fecha = $fecha;
         $this->codusuario = $codusuario;
     }
@@ -72,22 +63,6 @@ class Venta
     public function setId(int $id): void
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return float
-     */
-    public function getPreciofinal(): float
-    {
-        return $this->preciofinal;
-    }
-
-    /**
-     * @param float $preciofinal
-     */
-    public function setPreciofinal(float $preciofinal): void
-    {
-        $this->preciofinal = $preciofinal;
     }
 
     /**
