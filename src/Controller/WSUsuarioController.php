@@ -22,9 +22,20 @@ class WSUsuarioController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
         $entityManager = $this->getDoctrine()->getManager();
-        $usuario = $entityManager->getRepository(Usuario::class)->findOneBy(['usuario' => $data['usuario'],'password' => $data['password']]);
-        $json = $this->convertirJson($usuario);
-        return $json;
+        $usuarioExiste = $entityManager->getRepository(Usuario::class)->findOneBy(['usuario' => $data['usuario']]);
+        if($usuarioExiste)
+        {
+            $usuario = $entityManager->getRepository(Usuario::class)->findOneBy(['usuario' => $data['usuario'],'password' => $data['password']]);
+            $json = $this->convertirJson($usuario);
+            return $json;
+        }else
+        {
+            return new JsonResponse(
+                ['status' => 'El usuario no existe, registrate'],
+                Response::HTTP_NO_CONTENT
+            );
+        }
+
     }
 
 

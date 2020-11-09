@@ -19,6 +19,17 @@ use Symfony\Component\Serializer\Serializer;
 class WSProductoController extends AbstractController
 {
 
+    /**
+     * @Route("/ws/saisadog/producto/obtener", name="ws/producto/obtener", methods={"GET"})
+     */
+    public function getProductos() : JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $productos = $entityManager->getRepository(Producto::class)->findAllProductos();
+        $json = $this->convertirJson($productos);
+        return $json;
+    }
+
 
     /**
      * @Route("/ws/saisadog/producto/obtenerPorGenero/{codGenero}", name="ws/producto/obtenePorGenero/codGenero", methods={"GET"})

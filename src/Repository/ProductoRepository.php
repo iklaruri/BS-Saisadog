@@ -21,6 +21,19 @@ class ProductoRepository extends ServiceEntityRepository
         $this->entityManager = $this->getEntityManager();
     }
 
+    public function findAllProductos():array
+    {
+        $sql = "SELECT prod.id,prod.nombre AS producto,prod.stock,art.nombre AS artista,tip.nombre AS tipo,gal.ruta
+                    FROM App\Entity\Producto prod                                       
+                    INNER JOIN prod.codtipoProducto tip
+                    INNER JOIN prod.codartista art  
+                    INNER JOIN App\Entity\Galeria gal WITH prod.id=gal.codproducto                 
+                    WHERE prod.stock > 0 ";
+
+        $query = $this->entityManager->createQuery($sql);
+        return $query->execute();
+    }
+
     public function findProductosByTermino($termino):array
     {
         $sql = "SELECT prod.id,prod.nombre,prod.stock,art.nombre AS artista,tip.nombre AS tipo,gal.ruta
@@ -37,10 +50,11 @@ class ProductoRepository extends ServiceEntityRepository
 
     public function findProductosByArtista($codArtista): array
     {
-        $sql = "SELECT prod.id,prod.nombre,prod.stock,tip.nombre AS tipo
+        $sql = "SELECT prod.id,prod.nombre AS producto,prod.stock,tip.nombre AS tipo,gal.ruta
                     FROM App\Entity\Producto prod 
                     INNER JOIN prod.codtipoProducto tip
                     INNER JOIN prod.codartista art
+                    INNER JOIN App\Entity\Galeria gal WITH prod.id=gal.codproducto       
                     WHERE art.id=:codArtista
                     AND prod.stock > 0                     
                     ORDER BY prod.nombre";
@@ -50,10 +64,11 @@ class ProductoRepository extends ServiceEntityRepository
 
     public function findProductosByTipo($codTipo): array
     {
-        $sql = "SELECT prod.id,prod.nombre,prod.stock,art.nombre
-                    FROM App\Entity\Producto prod                                       
+        $sql = "SELECT prod.id,prod.nombre AS producto,prod.stock,art.nombre AS artista,gal.ruta
+                    FROM App\Entity\Producto prod 
                     INNER JOIN prod.codtipoProducto tip
                     INNER JOIN prod.codartista art
+                    INNER JOIN App\Entity\Galeria gal WITH prod.id=gal.codproducto       
                     WHERE tip.id=:codTipo
                     AND prod.stock > 0                     
                     ORDER BY prod.nombre";

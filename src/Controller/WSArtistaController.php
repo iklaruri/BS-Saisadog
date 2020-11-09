@@ -18,6 +18,17 @@ class WSArtistaController extends AbstractController
 {
 
     /**
+     * @Route("/ws/saisadog/artista/obtener", name="ws/artista/obtener", methods={"GET"})
+     */
+    public function getArtistas() : JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $artistas = $entityManager->getRepository(Artista::class)->findAll();
+        $json = $this->convertirJson($artistas);
+        return $json;
+    }
+
+    /**
      * @Route("/ws/saisadog/artista/obtenerNovedades", name="ws/artista/obtenerNovedades", methods={"GET"})
      */
     public function getArtistasNovedades() : JsonResponse

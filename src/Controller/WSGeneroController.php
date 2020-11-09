@@ -17,6 +17,16 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 class WSGeneroController extends AbstractController
 {
 
+    /**
+     * @Route("/ws/saisadog/genero/obtener", name="ws/genero/obtener", methods={"GET"})
+     */
+    public function getGeneros() : JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $generos = $entityManager->getRepository(Genero::class)->findAll();
+        $json = $this->convertirJson($generos);
+        return $json;
+    }
 
     /**
      * @Route("/ws/saisadog/genero/anadir", name="ws/genero/anadir", methods={"POST"})
