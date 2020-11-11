@@ -44,7 +44,7 @@ class WSProductoController extends AbstractController
 
 
     /**
-     * @Route("/ws/saisadog/producto/obtenerPorGenero/{codGenero}", name="ws/producto/obtenePorGenero/codGenero", methods={"GET"})
+     * @Route("/ws/saisadog/producto/obtenerPorGenero/{codGenero}", name="ws/producto/obtenerPorGenero/codGenero", methods={"GET"})
      */
     public function getProductosPorGenero($codGenero) : JsonResponse
     {

@@ -10,13 +10,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d0ad655-a457-463e-95b0-4595316f5314" name="Default Changelist" comment="Peticiones +">
+    <list default="true" id="2d0ad655-a457-463e-95b0-4595316f5314" name="Default Changelist" comment="Peticiones modificadas">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/WSProductoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WSProductoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/WSVentaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WSVentaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Venta.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Venta.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/HistorialRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/HistorialRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/ProductoRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ProductoRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/ProductoGeneroRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ProductoGeneroRepository.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,7 +200,8 @@
       <workItem from="1604997829712" duration="598000" />
       <workItem from="1604999738285" duration="1239000" />
       <workItem from="1605005778681" duration="1310000" />
-      <workItem from="1605096130416" duration="1160000" />
+      <workItem from="1605096130416" duration="1553000" />
+      <workItem from="1605099031803" duration="1227000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1603977184015</created>
@@ -247,7 +245,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604927232145</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Peticiones modificadas">
+      <created>1605097820232</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1605097820232</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,7 +275,8 @@
     <MESSAGE value="Second commit" />
     <MESSAGE value="Final commit" />
     <MESSAGE value="Peticiones +" />
-    <option name="LAST_COMMIT_MESSAGE" value="Peticiones +" />
+    <MESSAGE value="Peticiones modificadas" />
+    <option name="LAST_COMMIT_MESSAGE" value="Peticiones modificadas" />
   </component>
   <component name="WindowStateProjectService">
     <state x="804" y="332" width="451" height="604" key="#com.intellij.ide.util.MemberChooser" timestamp="1605096281215">
@@ -305,10 +311,10 @@
       <screen x="72" y="27" width="1848" height="1173" />
     </state>
     <state x="294" y="151" width="1022" height="737" key="SettingsEditor/72.27.1848.1173@72.27.1848.1173" timestamp="1603888972094" />
-    <state x="591" y="349" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1604927241008">
+    <state x="591" y="349" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1605097827050">
       <screen x="72" y="27" width="1848" height="1173" />
     </state>
-    <state x="591" y="349" width="800" height="535" key="Vcs.Push.Dialog.v2/72.27.1848.1173@72.27.1848.1173" timestamp="1604927241008" />
+    <state x="591" y="349" width="800" height="535" key="Vcs.Push.Dialog.v2/72.27.1848.1173@72.27.1848.1173" timestamp="1605097827050" />
     <state x="659" y="289" width="672" height="678" key="search.everywhere.popup" timestamp="1604560912133">
       <screen x="72" y="27" width="1848" height="1173" />
     </state>

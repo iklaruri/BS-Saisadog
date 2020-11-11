@@ -21,13 +21,14 @@ class ProductoGeneroRepository extends ServiceEntityRepository
 
     public function findProductosByGenero($codGenero): array
     {
-        $sql = "SELECT prod.id,prod.nombre,prod.stock
-                    FROM App\Entity\ProductoGenero prodGen
-                    JOIN prodGen.codproducto prod
-                    JOIN prodGen.codgenero gen         
-                    JOIN prod.codartista            
+        $sql = "SELECT prod.id,prod.nombre AS producto,prod.stock,tip.nombre AS tipo,gal.ruta
+                    FROM App\Entity\Producto prod 
+                    INNER JOIN prod.codtipoProducto tip
+                    INNER JOIN prod.codartista art
+                    INNER JOIN App\Entity\ProductoGenero prodGen WITH prod.id=prodGen.codproducto     
+                    INNER JOIN App\Entity\Galeria gal WITH prod.id=gal.codproducto       
                     WHERE prodGen.codgenero=:codGenero
-                    AND prod.stock > 0
+                    AND prod.stock > 0                     
                     ORDER BY prod.nombre";
         $query = $this->entityManager->createQuery($sql)->setParameter('codGenero', $codGenero);
         return $query->execute();
