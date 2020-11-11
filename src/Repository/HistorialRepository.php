@@ -33,7 +33,7 @@ class HistorialRepository extends ServiceEntityRepository
                     AND his.fecha LIKE :fecha
                     ORDER BY his.fecha DESC";
         try {
-            return $query = $this->entityManager->createQuery($sql)->setParameters(['codProducto' => $codProducto, 'fecha' => $fecha . '%'])->getSingleResult();
+            return $query = $this->entityManager->createQuery($sql)->setParameters(['codProducto' => $codProducto, 'fecha' => $fecha.'%'])->getSingleResult();
         } catch (NoResultException $e) {
             return null;
         } catch (NonUniqueResultException $e) {

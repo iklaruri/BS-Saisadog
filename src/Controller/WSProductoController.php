@@ -32,6 +32,18 @@ class WSProductoController extends AbstractController
 
 
     /**
+     * @Route("/ws/saisadog/producto/obtenerProducto/{codProducto}/{fecha}", name="ws/producto/obtener/id", methods={"GET"})
+     */
+    public function getProductosById($codProducto,$fecha) : JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $producto = $entityManager->getRepository(Producto::class)->findProductoById($codProducto,$fecha);
+        $json = $this->convertirJson($producto);
+        return $json;
+    }
+
+
+    /**
      * @Route("/ws/saisadog/producto/obtenerPorGenero/{codGenero}", name="ws/producto/obtenePorGenero/codGenero", methods={"GET"})
      */
     public function getProductosPorGenero($codGenero) : JsonResponse

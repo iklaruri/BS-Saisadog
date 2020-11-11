@@ -44,6 +44,7 @@ class WSVentaController extends AbstractController
 
         $ventaNuevo = new Venta(
             \DateTime::createFromFormat('Y-m-d H:i:s', $data['fecha']),
+            $data['direccion'],
             $usuario
         );
 

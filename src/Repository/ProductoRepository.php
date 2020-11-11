@@ -21,6 +21,28 @@ class ProductoRepository extends ServiceEntityRepository
         $this->entityManager = $this->getEntityManager();
     }
 
+    public function findProductoById($codProducto,$fecha)
+    {
+        $sql = "SELECT prod.id,prod.nombre AS producto,prod.stock,art.nombre AS artista,tip.nombre AS tipo,gal.ruta,his.precio,his.esoferta
+                    FROM App\Entity\Producto prod                                       
+                    INNER JOIN prod.codtipoProducto tip
+                    INNER JOIN prod.codartista art  
+                    INNER JOIN App\Entity\Galeria gal WITH prod.id=gal.codproducto
+                    INNER JOIN App\Entity\Historial his WITH his.codproducto=prod.id            
+                    WHERE prod.stock > 0
+                    AND prod.id=:codProducto
+                    AND his.fecha LIKE :fecha";
+
+        try {
+            return $query = $this->entityManager->createQuery($sql)->setParameters(['codProducto' => $codProducto, 'fecha' => $fecha.'%'])->getSingleResult();
+        } catch (NoResultException $e) {
+            return null;
+        } catch (NonUniqueResultException $e) {
+            return null;
+        }
+
+    }
+
     public function findAllProductos():array
     {
         $sql = "SELECT prod.id,prod.nombre AS producto,prod.stock,art.nombre AS artista,tip.nombre AS tipo,gal.ruta

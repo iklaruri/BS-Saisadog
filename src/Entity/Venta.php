@@ -29,6 +29,13 @@ class Venta
     private $fecha;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="direccion", type="string", length=50, nullable=false)
+     */
+    private $direccion;
+
+    /**
      * @var Usuario
      *
      * @ORM\ManyToOne(targetEntity="Usuario")
@@ -43,9 +50,10 @@ class Venta
      * @param \DateTime $fecha
      * @param Usuario $codusuario
      */
-    public function __construct(\DateTime $fecha, Usuario $codusuario)
+    public function __construct(\DateTime $fecha, string $direccion, Usuario $codusuario)
     {
         $this->fecha = $fecha;
+        $this->direccion = $direccion;
         $this->codusuario = $codusuario;
     }
 
@@ -79,6 +87,22 @@ class Venta
     public function setFecha(\DateTime $fecha): void
     {
         $this->fecha = $fecha;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDireccion(): string
+    {
+        return $this->direccion;
+    }
+
+    /**
+     * @param string $direccion
+     */
+    public function setDireccion(string $direccion): void
+    {
+        $this->direccion = $direccion;
     }
 
     /**
