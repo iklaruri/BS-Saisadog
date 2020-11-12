@@ -21,7 +21,7 @@ class TallaRepository extends ServiceEntityRepository
 
     public function findTallasByProducto($codProducto): array
     {
-        $sql = "SELECT tall.nombre,tal.stock
+        $sql = "SELECT tall.id,tall.nombre,tal.stock
                     FROM App\Entity\Talla tal 
                     INNER JOIN tal.codproducto prod
                     INNER JOIN tal.codtallaje tall                   
