@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Historial
  *
  * @ORM\Table(name="Historial", indexes={@ORM\Index(name="codProducto", columns={"codProducto"})})
- * @ORM\Entity(repositoryClass="App\Repository\HistorialRepository")
+ * @ORM\Entity
  */
 class Historial
 {
