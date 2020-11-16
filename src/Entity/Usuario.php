@@ -59,7 +59,7 @@ class Usuario
     /**
      * @var string
      *
-     * @ORM\Column(name="foto", type="string", length=155, nullable=false)
+     * @ORM\Column(name="foto", type="string", length=155, nullable=true)
      */
     private $foto;
 
@@ -70,16 +70,14 @@ class Usuario
      * @param string $email
      * @param string $tlf
      * @param string $password
-     * @param string $foto
      */
-    public function __construct(string $usuario, string $direccion, string $email, string $tlf, string $password, string $foto)
+    public function __construct(string $usuario, string $direccion, string $email, string $tlf, string $password)
     {
         $this->usuario = $usuario;
         $this->direccion = $direccion;
         $this->email = $email;
         $this->tlf = $tlf;
         $this->password = $password;
-        $this->foto = $foto;
     }
 
     /**

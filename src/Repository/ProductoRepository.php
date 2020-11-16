@@ -72,7 +72,7 @@ class ProductoRepository extends ServiceEntityRepository
 
     public function findProductosByArtista($codArtista): array
     {
-        $sql = "SELECT prod.id,prod.nombre AS producto,prod.stock,tip.nombre AS tipo,gal.ruta
+        $sql = "SELECT prod.id,prod.nombre AS producto,art.nombre AS artista,prod.stock,tip.nombre AS tipo,gal.ruta
                     FROM App\Entity\Producto prod 
                     INNER JOIN prod.codtipoProducto tip
                     INNER JOIN prod.codartista art
@@ -83,6 +83,23 @@ class ProductoRepository extends ServiceEntityRepository
         $query = $this->entityManager->createQuery($sql)->setParameter('codArtista', $codArtista);
         return $query->execute();
     }
+
+    public function findProductosByGenero($codGenero): array
+    {
+        $sql = "SELECT prod.id,prod.nombre AS producto,art.nombre AS artista,prod.stock,tip.nombre AS tipo,gal.ruta
+                    FROM App\Entity\Producto prod 
+                    INNER JOIN prod.codtipoProducto tip
+                    INNER JOIN prod.codartista art
+                    INNER JOIN App\Entity\Galeria gal WITH prod.id=gal.codproducto      
+                    INNER JOIN App\Entity\ProductoGenero prodGen WITH prod.id=prodGen.codproducto       
+                    WHERE prodGen.codgenero=:codGenero
+                    AND prod.stock > 0                     
+                    ORDER BY prod.nombre";
+        $query = $this->entityManager->createQuery($sql)->setParameter('codGenero', $codGenero);
+        return $query->execute();
+    }
+
+
 
     public function findProductosByTipo($codTipo): array
     {

@@ -49,7 +49,7 @@ class WSProductoController extends AbstractController
     public function getProductosPorGenero($codGenero) : JsonResponse
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $productos = $entityManager->getRepository(ProductoGenero::class)->findProductosByGenero($codGenero);
+        $productos = $entityManager->getRepository(Producto::class)->findProductosByGenero($codGenero);
         $json = $this->convertirJson($productos);
         return $json;
     }
@@ -148,26 +148,23 @@ class WSProductoController extends AbstractController
     }
 
     /**
-     * @Route("/ws/saisadog/producto/actualizar", name="ws/producto/actualizar", methods={"PUT"})
+     * @Route("/ws/saisadog/producto/actualizarStock", name="ws/producto/actualizar", methods={"PUT"})
      */
-    public function actualizarProducto(Request $request) : JsonResponse
+    public function actualizarProductoStock(Request $request) : JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         $entityManager = $this->getDoctrine()->getManager();
 
-        $artista = $entityManager->getRepository(Artista::class)->findOneBy(['id' => $data['codArtista']]);
-        $tipoProducto = $entityManager->getRepository(TipoProducto::class)->findOneBy(['id' => $data['codTipoProducto']]);
 
-        $producto = $entityManager->getRepository(Producto::class)->findOneBy(['codartista' => $artista->getId(),'codtipoProducto' => $tipoProducto->getId()]);
+        $producto = $entityManager->getRepository(Producto::class)->findOneBy(['id' => $data['codProducto']]);
 
-        $producto->setNombre($data['nombre']);
-        $producto->setStock($data['stock']);
+         $producto->setStock($data['stock']);
 
         $this->getDoctrine()->getManager()->persist($producto);
         $this->getDoctrine()->getManager()->flush();
 
         return new JsonResponse(
-            ['status' => 'Detalle Venta actualizado'],
+            ['status' => 'Talla stock actualizado'],
             Response::HTTP_CREATED
         );
 

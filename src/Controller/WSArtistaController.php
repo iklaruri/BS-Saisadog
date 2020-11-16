@@ -23,7 +23,7 @@ class WSArtistaController extends AbstractController
     public function getArtistas() : JsonResponse
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $artistas = $entityManager->getRepository(Artista::class)->findAll();
+        $artistas = $entityManager->getRepository(Artista::class)->findAllOrder();
         $json = $this->convertirJson($artistas);
         return $json;
     }

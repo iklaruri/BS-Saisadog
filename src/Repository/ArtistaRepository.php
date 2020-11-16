@@ -30,4 +30,15 @@ class ArtistaRepository extends ServiceEntityRepository
         $query = $this->entityManager->createQuery($sql)->setMaxResults(6);
         return $query->execute();
     }
+
+    public function findAllOrder(): array
+    {
+        $sql = "SELECT art
+                    FROM App\Entity\Artista art
+                    ORDER BY art.nombre";
+        $query = $this->entityManager->createQuery($sql);
+        return $query->execute();
+    }
+
+
 }

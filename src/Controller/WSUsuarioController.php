@@ -62,8 +62,7 @@ class WSUsuarioController extends AbstractController
                 $data['direccion'],
                 $data['email'],
                 $data['tlf'],
-                $data['password'],
-                $data['foto']
+                $data['password']
             );
 
             $this->getDoctrine()->getManager()->persist($usuarioNuevo);
