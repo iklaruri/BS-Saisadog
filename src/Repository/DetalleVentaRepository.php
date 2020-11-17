@@ -19,21 +19,22 @@ class DetalleVentaRepository extends ServiceEntityRepository
         $this->entityManager = $this->getEntityManager();
     }
 
-
-   public function findVentasByUsuarioFecha($codUsuario,$fecha): array
+   
+    public function findDetalleVentasByVenta($codVenta,$fecha): array
     {
-        $sql = "SELECT ven.id AS idVenta,ven.fecha,det.id AS idDetalle,gal.ruta AS ruta,det.cantidad,art.nombre AS artista,prod.nombre AS producto,his.precio
+        $sql = "SELECT det.id,prod.nombre AS producto,art.nombre AS artista,his.precio,det.cantidad,gal.ruta AS imagen,det.talla
                     FROM App\Entity\DetalleVenta det 
                     INNER JOIN det.codventa ven
                     INNER JOIN det.codproducto prod     
                     INNER JOIN App\Entity\Artista art WITH prod.codartista=art.id              
                     INNER JOIN App\Entity\Galeria gal WITH prod.id=gal.codproducto
                     INNER JOIN App\Entity\Historial his WITH prod.id=his.codproducto                                                        
-                    WHERE ven.codusuario=:codUsuario 
-                    AND his.fecha LIKE :fecha";
+                    WHERE det.codventa=:codVenta 
+                    AND ven.fecha LIKE :fecha
+                    ";
 
 
-        $query = $this->entityManager->createQuery($sql)->setParameters(['codUsuario' => $codUsuario,'fecha' => $fecha.'%']);
+        $query = $this->entityManager->createQuery($sql)->setParameters(['codVenta' => $codVenta,'fecha' => $fecha.'%']);
         return $query->execute();
     }
 
