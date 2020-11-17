@@ -91,7 +91,7 @@ class WSVentaController extends AbstractController
         $normalizar = [new DateTimeNormalizer(), new ObjectNormalizer()];
         $serializer = new Serializer($normalizar, $encoders);
         $normalizado = $serializer->normalize($object, null,
-            array(DateTimeNormalizer::FORMAT_KEY => 'Y/m/d H:i:s'));
+            array(DateTimeNormalizer::FORMAT_KEY => 'Y/m/d'));
         $jsonContent = $serializer->serialize($normalizado, 'json');
         return JsonResponse::fromJsonString($jsonContent, Response::HTTP_OK);
     }
