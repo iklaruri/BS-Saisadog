@@ -58,7 +58,7 @@ class ProductoRepository extends ServiceEntityRepository
 
     public function findProductosByTermino($termino):array
     {
-        $sql = "SELECT prod.id,prod.nombre,prod.stock,art.nombre AS artista,tip.nombre AS tipo,gal.ruta
+        $sql = "SELECT prod.id,prod.nombre AS producto,prod.stock,art.nombre AS artista,tip.nombre AS tipo,gal.ruta
                     FROM App\Entity\Producto prod 
                     INNER JOIN prod.codtipoProducto tip
                     INNER JOIN prod.codartista art

@@ -28,67 +28,6 @@ class WSGeneroController extends AbstractController
         return $json;
     }
 
-    /**
-     * @Route("/ws/saisadog/genero/anadir", name="ws/genero/anadir", methods={"POST"})
-     */
-    public function anadirGenero(Request $request) : JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
-        $entityManager = $this->getDoctrine()->getManager();
-
-        $genero = $entityManager->getRepository(Genero::class)->findOneBy(['nombre' => $data['nombre']]);
-
-        if($genero)
-        {
-            return new JsonResponse(
-                ['status' => 'Genero ya existe'],
-                Response::HTTP_IM_USED
-            );
-        }else
-        {
-            $generoNuevo = new Genero(
-                $data['nombre']
-            );
-
-            $this->getDoctrine()->getManager()->persist($generoNuevo);
-            $this->getDoctrine()->getManager()->flush();
-
-            return new JsonResponse(
-                ['status' => 'Genero creado'],
-                Response::HTTP_CREATED
-            );
-        }
-    }
-
-
-    /**
-     * @Route("/ws/saisadog/genero/actualizar", name="ws/genero/actualizar", methods={"PUT"})
-     */
-    public function actualizarGenero(Request $request) : JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
-        $entityManager = $this->getDoctrine()->getManager();
-
-        $genero = $entityManager->getRepository(Genero::class)->findOneBy(['id' => $data['id']]);
-
-        if($genero)
-        {
-            $genero->setNombre($data['nombre']);
-
-            $this->getDoctrine()->getManager()->persist($genero);
-            $this->getDoctrine()->getManager()->flush();
-
-            return new JsonResponse(
-                ['status' => 'Actualizado', 'generoActualizado' => $genero],
-                Response::HTTP_CREATED
-            );
-        }else{
-            return new JsonResponse(
-                ['status' => 'No se ha podido actualizar'],
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
 
     private function convertirJson($object) : JsonResponse
     {

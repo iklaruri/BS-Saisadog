@@ -2,10 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Artista;
+
 use App\Entity\Producto;
-use App\Entity\ProductoGenero;
-use App\Entity\TipoProducto;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -100,52 +98,6 @@ class WSProductoController extends AbstractController
         return $json;
     }
 
-    /**
-     * @Route("/ws/saisadog/producto/anadir", name="ws/producto/anadir", methods={"POST"})
-     */
-    public function anadirProducto(Request $request) : JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
-        $entityManager = $this->getDoctrine()->getManager();
-
-        $producto = $entityManager->getRepository(Producto::class)->findOneBy(['nombre' => $data['nombre'],'codartista' => $data['codArtista'],'codtipoProducto' => $data['codTipoProducto']]);
-
-        if($producto)
-        {
-            return new JsonResponse(
-                ['status' => 'Producto ya existe'],
-                Response::HTTP_IM_USED
-            );
-        }else
-        {
-            $artista = $entityManager->getRepository(Artista::class)->findOneBy(['id' => $data['codArtista']]);
-            $tipoProducto = $entityManager->getRepository(TipoProducto::class)->findOneBy(['id' => $data['codTipoProducto']]);
-
-            if($artista && $tipoProducto)
-            {
-                $productoNuevo = new Producto(
-                    $data['nombre'],
-                    $data['stock'],
-                    $artista,
-                    $tipoProducto
-                );
-
-                $this->getDoctrine()->getManager()->persist($productoNuevo);
-                $this->getDoctrine()->getManager()->flush();
-
-                return new JsonResponse(
-                    ['status' => 'Producto creado'],
-                    Response::HTTP_CREATED
-                );
-            }else
-            {
-                return new JsonResponse(
-                    ['status' => 'Artista o TipoProducto no existe'],
-                    Response::HTTP_CREATED
-                );
-            }
-        }
-    }
 
     /**
      * @Route("/ws/saisadog/producto/actualizarStock", name="ws/producto/actualizar", methods={"PUT"})

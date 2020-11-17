@@ -10,11 +10,18 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d0ad655-a457-463e-95b0-4595316f5314" name="Default Changelist" comment="Peticiones modificadas">
+    <list default="true" id="2d0ad655-a457-463e-95b0-4595316f5314" name="Default Changelist" comment="Historial mod">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Historial.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Historial.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/DetalleVentaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/DetalleVentaRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/HistorialRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/WSArtistaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WSArtistaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/WSDetalleVentaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WSDetalleVentaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/WSGeneroController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WSGeneroController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/WSProductoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WSProductoController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/WSTallajeController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/WSUsuarioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WSUsuarioController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/WSVentaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WSVentaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Usuario.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Usuario.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Venta.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Venta.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/ProductoRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ProductoRepository.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,7 +221,15 @@
       <workItem from="1605515516758" duration="598000" />
       <workItem from="1605518762461" duration="1116000" />
       <workItem from="1605524850975" duration="1644000" />
-      <workItem from="1605529108598" duration="492000" />
+      <workItem from="1605529108598" duration="1373000" />
+      <workItem from="1605530995584" duration="1252000" />
+      <workItem from="1605596844177" duration="1362000" />
+      <workItem from="1605598425092" duration="1198000" />
+      <workItem from="1605600656089" duration="870000" />
+      <workItem from="1605607366691" duration="14000" />
+      <workItem from="1605607397632" duration="401000" />
+      <workItem from="1605607818655" duration="96000" />
+      <workItem from="1605607934469" duration="599000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1603977184015</created>
@@ -279,7 +294,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605529152815</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Historial mod">
+      <created>1605529858027</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1605529858027</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -303,7 +325,8 @@
     <MESSAGE value="Final commit" />
     <MESSAGE value="Peticiones +" />
     <MESSAGE value="Peticiones modificadas" />
-    <option name="LAST_COMMIT_MESSAGE" value="Peticiones modificadas" />
+    <MESSAGE value="Historial mod" />
+    <option name="LAST_COMMIT_MESSAGE" value="Historial mod" />
   </component>
   <component name="WindowStateProjectService">
     <state x="804" y="332" width="451" height="604" key="#com.intellij.ide.util.MemberChooser" timestamp="1605096281215">
@@ -338,10 +361,10 @@
       <screen x="72" y="27" width="1848" height="1173" />
     </state>
     <state x="294" y="151" width="1022" height="737" key="SettingsEditor/72.27.1848.1173@72.27.1848.1173" timestamp="1603888972094" />
-    <state x="591" y="349" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1605529160929">
+    <state x="591" y="349" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1605529866459">
       <screen x="72" y="27" width="1848" height="1173" />
     </state>
-    <state x="591" y="349" width="800" height="535" key="Vcs.Push.Dialog.v2/72.27.1848.1173@72.27.1848.1173" timestamp="1605529160929" />
+    <state x="591" y="349" width="800" height="535" key="Vcs.Push.Dialog.v2/72.27.1848.1173@72.27.1848.1173" timestamp="1605529866459" />
     <state x="659" y="289" width="672" height="678" key="search.everywhere.popup" timestamp="1604560912133">
       <screen x="72" y="27" width="1848" height="1173" />
     </state>

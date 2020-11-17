@@ -38,6 +38,17 @@ class WSUsuarioController extends AbstractController
 
     }
 
+    /**
+     * @Route("/ws/saisadog/usuario/obtener/{codUsuario}", name="ws/saisadog/usuario/obtener/codUsuario", methods={"GET"})
+     */
+    public function getUsuario($codUsuario) : JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $usuario = $entityManager->getRepository(Usuario::class)->findOneBy(['id' => $codUsuario]);
+        $json = $this->convertirJson($usuario);
+        return $json;
+    }
+
 
     /**
      * @Route("/ws/saisadog/usuario/anadir", name="ws/saisadog/usuario/anadir", methods={"POST"})
@@ -62,7 +73,8 @@ class WSUsuarioController extends AbstractController
                 $data['direccion'],
                 $data['email'],
                 $data['tlf'],
-                $data['password']
+                $data['password'],
+                ''
             );
 
             $this->getDoctrine()->getManager()->persist($usuarioNuevo);
@@ -85,7 +97,7 @@ class WSUsuarioController extends AbstractController
         $data = json_decode($request->getContent(), true);
         $entityManager = $this->getDoctrine()->getManager();
 
-        $usuario = $entityManager->getRepository(Usuario::class)->findOneBy(['id' => $data['id']]);
+        $usuario = $entityManager->getRepository(Usuario::class)->findOneBy(['id' => $data['codUsuario']]);
 
         if($usuario)
         {
@@ -94,7 +106,6 @@ class WSUsuarioController extends AbstractController
             $usuario->setTlf($data['tlf']);
             $usuario->setPassword($data['password']);
             $usuario->setUsuario($data['usuario']);
-            $usuario->setFoto($data['foto']);
 
             $this->getDoctrine()->getManager()->persist($usuario);
             $this->getDoctrine()->getManager()->flush();
@@ -109,19 +120,6 @@ class WSUsuarioController extends AbstractController
                 Response::HTTP_NO_CONTENT
             );
         }
-    }
-
-    /**
-     * @Route("/ws/saisadog/usuario/eliminar/{id}", name="ws/saisadog/usuario/eliminar", methods={"DELETE"})
-     */
-    public function eliminarUsuario($id) : JsonResponse
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $usuario = $entityManager->getRepository(Usuario::class)
-            ->findOneBy(['id' => $id]);
-        $entityManager->remove($usuario);
-        $entityManager->flush();
-        return new JsonResponse(['status'=>'Usuario eliminado'], Response::HTTP_OK);
     }
 
 

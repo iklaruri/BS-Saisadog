@@ -58,35 +58,6 @@ class WSVentaController extends AbstractController
 
     }
 
-    /**
-     * @Route("/ws/saisadog/venta/actualizar", name="ws/saisadog/venta/actualizar", methods={"PUT"})
-     */
-    public function actualizarVenta(Request $request) : JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
-        $em = $this->getDoctrine()->getManager();
-
-        $venta = $em->getRepository(Venta::class)->findOneBy(['id' => $data['id']]);
-
-        if($venta)
-        {
-            $venta->setPreciofinal($data['precioFinal']);
-            $venta->setFecha( \DateTime::createFromFormat('Y-m-d H:i:s', $data['fecha']));
-
-            $this->getDoctrine()->getManager()->persist($venta);
-            $this->getDoctrine()->getManager()->flush();
-
-            return new JsonResponse(
-                ['status' => 'Actualizado', 'ventaActualizado' => $venta],
-                Response::HTTP_CREATED
-            );
-        }else{
-            return new JsonResponse(
-                ['status' => 'No se ha podido actualizar'],
-                Response::HTTP_NOT_FOUND
-            );
-        }
-    }
 
     /**
      * @Route("/ws/saisadog/venta/eliminar/{id}", name="ws/saisadog/venta/eliminar", methods={"DELETE"})

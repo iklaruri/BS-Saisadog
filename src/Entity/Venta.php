@@ -48,6 +48,7 @@ class Venta
     /**
      * Venta constructor.
      * @param \DateTime $fecha
+     * @param string $direccion
      * @param Usuario $codusuario
      */
     public function __construct(\DateTime $fecha, string $direccion, Usuario $codusuario)

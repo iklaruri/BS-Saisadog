@@ -55,46 +55,4 @@ class WSDetalleVentaController extends AbstractController
 
     }
 
-
-    /**
-     * @Route("/ws/saisadog/detalleVenta/actualizar", name="ws/detalleVenta/actualizar", methods={"PUT"})
-     */
-    public function actualizarDetalleVenta(Request $request) : JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
-        $entityManager = $this->getDoctrine()->getManager();
-
-        $venta = $entityManager->getRepository(Venta::class)->findOneBy(['id' => $data['codVenta']]);
-        $producto = $entityManager->getRepository(Producto::class)->findOneBy(['id' => $data['codProducto']]);
-
-        $detalleVenta = $entityManager->getRepository(DetalleVenta::class)->findOneBy(['codventa' => $venta->getId(),'codproducto' => $producto->getId()]);
-
-        if($detalleVenta)
-        {
-            $detalleVenta->setCantidad($data['cantidad']);
-            $this->getDoctrine()->getManager()->persist($detalleVenta);
-            $this->getDoctrine()->getManager()->flush();
-
-            return new JsonResponse(
-                ['status' => 'Detalle Venta actualizado'],
-                Response::HTTP_OK
-            );
-        }else
-        {
-            return new JsonResponse(
-                ['status' => 'No se ha podido actualizar'],
-                Response::HTTP_NO_CONTENT
-            );
-        }
-    }
-
-    private function convertirJson($object) : JsonResponse
-    {
-        $encoders = [new XmlEncoder(), new JsonEncoder()];
-        $normalizar = [new ObjectNormalizer()];
-        $serializer = new Serializer($normalizar, $encoders);
-        $normalizado = $serializer->normalize($object, null);
-        $jsonContent = $serializer->serialize($normalizado, 'json');
-        return JsonResponse::fromJsonString($jsonContent, Response::HTTP_OK);
-    }
 }
