@@ -20,7 +20,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 class WSDetalleVentaController extends AbstractController
 {
 
-    /**
+   /**
      * @Route("/ws/saisadog/detalleVenta/anadir", name="ws/detalleVenta/anadir/venta", methods={"POST"})
      */
     public function anadirDetalleVenta(Request $request) : JsonResponse
@@ -34,6 +34,7 @@ class WSDetalleVentaController extends AbstractController
         {
             $detalleVentaNuevo = new DetalleVenta(
                 $data['cantidad'],
+                $data['talla'],
                 $producto,
                 $venta
             );
@@ -51,8 +52,27 @@ class WSDetalleVentaController extends AbstractController
                 Response::HTTP_BAD_REQUEST
             );
         }
+    }
 
+    /**
+     * @Route("/ws/saisadog/detalleVenta/obtener/{codVenta}/{fecha}", name="ws/detalleVenta/obtener/venta/fecha", methods={"GET"})
+     */
+    public function getDetalleVentasPorVenta($codVenta,$fecha) : JsonResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ventas = $em->getRepository(DetalleVenta::class)->findDetalleVentasByVenta($codVenta,$fecha);
+        $json = $this->convertirJson($ventas);
+        return $json;
+    }
 
+    private function convertirJson($object) : JsonResponse
+    {
+        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizar = [new ObjectNormalizer()];
+        $serializer = new Serializer($normalizar, $encoders);
+        $normalizado = $serializer->normalize($object, null);
+        $jsonContent = $serializer->serialize($normalizado, 'json');
+        return JsonResponse::fromJsonString($jsonContent, Response::HTTP_OK);
     }
 
 }
