@@ -56,20 +56,7 @@ class WSTallaController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/ws/saisadog/talla/eliminar/{codTallaje}/{codProducto}", name="ws/saisadog/prodGenero/eliminar", methods={"DELETE"})
-     */
-    public function eliminarTalla($codTallaje,$codProducto) : JsonResponse
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $talla = $entityManager->getRepository(Talla::class)
-            ->findOneBy(['codtallaje' => $codTallaje,'codproducto' => $codProducto]);
-        $entityManager->remove($talla);
-        $entityManager->flush();
-        return new JsonResponse(['status'=>'Talla eliminado'], Response::HTTP_OK);
-    }
-
-
+   
     private function convertirJson($object) : JsonResponse
     {
         $encoders = [new XmlEncoder(), new JsonEncoder()];
