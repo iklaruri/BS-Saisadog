@@ -37,4 +37,16 @@ class VentaRepository extends ServiceEntityRepository
             return null;
         }
     }
+    
+    public function findVentasByUsuarioFecha($codUsuario,$fecha): array
+    {
+        $sql = "SELECT ven.id AS idVenta,ven.fecha
+                    FROM App\Entity\Venta ven                                                                         
+                    WHERE ven.codusuario=:codUsuario 
+                    AND ven.fecha LIKE :fecha";
+
+
+        $query = $this->entityManager->createQuery($sql)->setParameters(['codUsuario' => $codUsuario,'fecha' => $fecha.'%']);
+        return $query->execute();
+    }
 }
