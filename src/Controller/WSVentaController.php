@@ -26,7 +26,7 @@ class WSVentaController extends AbstractController
     public function getVentasPorUsuarioYFecha($codUsuario,$fecha) : JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
-        $ventas = $em->getRepository(DetalleVenta::class)->findVentasByUsuarioFecha($codUsuario,$fecha);
+        $ventas = $em->getRepository(Venta::class)->findVentasByUsuarioFecha($codUsuario,$fecha);
         $json = $this->convertirJson($ventas);
         return $json;
     }
@@ -78,7 +78,7 @@ class WSVentaController extends AbstractController
             $entityManager->remove($venta);
             $entityManager->flush();
 
-            return new JsonResponse(['status'=>'Venta eliminado'], Response::HTTP_OK);
+            return new JsonResponse(['status'=>'Pedido eliminado'], Response::HTTP_OK);
         }else
         {
             return new JsonResponse(['status'=>'No se ha podido eliminar'], Response::HTTP_NO_CONTENT);
