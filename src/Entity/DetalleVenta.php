@@ -29,6 +29,13 @@ class DetalleVenta
     private $cantidad;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="talla", type="string", length=10, nullable=false)
+     */
+    private $talla;
+
+    /**
      * @var Producto
      *
      * @ORM\ManyToOne(targetEntity="Producto")
@@ -51,12 +58,14 @@ class DetalleVenta
     /**
      * DetalleVenta constructor.
      * @param int $cantidad
+     * @param string $talla
      * @param Producto $codproducto
      * @param Venta $codventa
      */
-    public function __construct(int $cantidad, Producto $codproducto, Venta $codventa)
+    public function __construct(int $cantidad, string $talla,Producto $codproducto, Venta $codventa)
     {
         $this->cantidad = $cantidad;
+        $this->talla = $talla;
         $this->codproducto = $codproducto;
         $this->codventa = $codventa;
     }
@@ -94,6 +103,22 @@ class DetalleVenta
     }
 
     /**
+     * @return string
+     */
+    public function getTalla(): string
+    {
+        return $this->talla;
+    }
+
+    /**
+     * @param string $talla
+     */
+    public function setTalla(string $talla): void
+    {
+        $this->talla = $talla;
+    }
+
+    /**
      * @return Producto
      */
     public function getCodproducto(): Producto
@@ -124,6 +149,7 @@ class DetalleVenta
     {
         $this->codventa = $codventa;
     }
+
 
 
 
