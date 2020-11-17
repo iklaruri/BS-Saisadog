@@ -30,7 +30,7 @@ class DetalleVentaRepository extends ServiceEntityRepository
                     INNER JOIN App\Entity\Galeria gal WITH prod.id=gal.codproducto
                     INNER JOIN App\Entity\Historial his WITH prod.id=his.codproducto                                                        
                     WHERE det.codventa=:codVenta 
-                    AND ven.fecha LIKE :fecha
+                    AND his.fecha LIKE :fecha
                     ";
 
 
