@@ -58,33 +58,7 @@ class WSVentaController extends AbstractController
 
     }
 
-
-    /**
-     * @Route("/ws/saisadog/venta/eliminar/{id}", name="ws/saisadog/venta/eliminar", methods={"DELETE"})
-     */
-    public function eliminarVenta($id) : JsonResponse
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $venta = $entityManager->getRepository(Venta::class)->findOneBy(['id' => $id]);
-        $detalleVentas = $entityManager->getRepository(DetalleVenta::class)->findBy(['codventa' => $venta->getId()]);
-
-        if($detalleVentas != null)
-        {
-            foreach ($detalleVentas as $detalleVenta)
-            {
-                $entityManager->remove($detalleVenta);
-            }
-
-            $entityManager->remove($venta);
-            $entityManager->flush();
-
-            return new JsonResponse(['status'=>'Pedido eliminado'], Response::HTTP_OK);
-        }else
-        {
-            return new JsonResponse(['status'=>'No se ha podido eliminar'], Response::HTTP_NO_CONTENT);
-        }
-    }
-
+    
     private function convertirJson($object) : JsonResponse
     {
         $encoders = [new XmlEncoder(), new JsonEncoder()];
