@@ -70,6 +70,53 @@ class ProductoRepository extends ServiceEntityRepository
         return $query->execute();
     }
 
+    public function findDiscosByTermino($termino):array
+    {
+        $sql = "SELECT prod.id,prod.nombre AS producto,prod.stock,art.nombre AS artista,tip.nombre AS tipo,gal.ruta
+                    FROM App\Entity\Producto prod 
+                    INNER JOIN prod.codtipoProducto tip
+                    INNER JOIN prod.codartista art
+                    INNER JOIN App\Entity\Galeria gal WITH prod.id=gal.codproducto                    
+                    WHERE prod.nombre LIKE :termino
+                    AND prod.stock > 0  
+                    AND prod.codtipoProducto = 1
+                    OR prod.codtipoProducto = 4
+                    OR prod.codtipoProducto = 5                
+                    ";
+        $query = $this->entityManager->createQuery($sql)->setParameter('termino', '%'.$termino.'%');
+        return $query->execute();
+    }
+
+    public function findRopasByTermino($termino):array
+    {
+        $sql = "SELECT prod.id,prod.nombre AS producto,prod.stock,art.nombre AS artista,tip.nombre AS tipo,gal.ruta
+                    FROM App\Entity\Producto prod 
+                    INNER JOIN prod.codtipoProducto tip
+                    INNER JOIN prod.codartista art
+                    INNER JOIN App\Entity\Galeria gal WITH prod.id=gal.codproducto                    
+                    WHERE prod.nombre LIKE :termino
+                    AND prod.stock > 0  
+                    AND prod.codtipoProducto = 2                               
+                    ";
+        $query = $this->entityManager->createQuery($sql)->setParameter('termino', '%'.$termino.'%');
+        return $query->execute();
+    }
+
+    public function findOtrosByTermino($termino):array
+    {
+        $sql = "SELECT prod.id,prod.nombre AS producto,prod.stock,art.nombre AS artista,tip.nombre AS tipo,gal.ruta
+                    FROM App\Entity\Producto prod 
+                    INNER JOIN prod.codtipoProducto tip
+                    INNER JOIN prod.codartista art
+                    INNER JOIN App\Entity\Galeria gal WITH prod.id=gal.codproducto                    
+                    WHERE prod.nombre LIKE :termino
+                    AND prod.stock > 0  
+                    AND prod.codtipoProducto = 3                              
+                    ";
+        $query = $this->entityManager->createQuery($sql)->setParameter('termino', '%'.$termino.'%');
+        return $query->execute();
+    }
+
     public function findProductosByArtista($codArtista): array
     {
         $sql = "SELECT prod.id,prod.nombre AS producto,art.nombre AS artista,prod.stock,tip.nombre AS tipo,gal.ruta
@@ -128,7 +175,6 @@ class ProductoRepository extends ServiceEntityRepository
         $query = $this->entityManager->createQuery($sql)->setMaxResults(6);
         return $query->execute();
     }
-
 
 
 
