@@ -86,6 +86,39 @@ class WSProductoController extends AbstractController
         return $json;
     }
 
+    /**
+     * @Route("/ws/saisadog/producto/obtenerDiscosPorTermino/{termino}", name="ws/producto/obtenerDiscosPorTermino/termino", methods={"GET"})
+     */
+    public function getDiscosPorTermino($termino) : JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $discos = $entityManager->getRepository(Producto::class)->findDiscosByTermino($termino);
+        $json = $this->convertirJson($discos);
+        return $json;
+    }
+
+    /**
+     * @Route("/ws/saisadog/producto/obtenerRopasPorTermino/{termino}", name="ws/producto/obtenerRopasPorTermino/termino", methods={"GET"})
+     */
+    public function getRopasPorTermino($termino) : JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $discos = $entityManager->getRepository(Producto::class)->findRopasByTermino($termino);
+        $json = $this->convertirJson($discos);
+        return $json;
+    }
+
+    /**
+     * @Route("/ws/saisadog/producto/obtenerOtrosPorTermino/{termino}", name="ws/producto/obtenerOtrosPorTermino/termino", methods={"GET"})
+     */
+    public function getOtrosPorTermino($termino) : JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $discos = $entityManager->getRepository(Producto::class)->findOtrosByTermino($termino);
+        $json = $this->convertirJson($discos);
+        return $json;
+    }
+
 
     /**
      * @Route("/ws/saisadog/producto/obtenerNovedades", name="ws/producto/obtenerNovedades", methods={"GET"})
