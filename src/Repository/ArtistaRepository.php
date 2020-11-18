@@ -40,5 +40,14 @@ class ArtistaRepository extends ServiceEntityRepository
         return $query->execute();
     }
 
+    public function findByTermino($termino): array
+    {
+        $sql = "SELECT art
+                    FROM App\Entity\Artista art
+                    WHERE art.nombre LIKE :termino";
+        $query = $this->entityManager->createQuery($sql)->setParameter('termino', '%'.$termino.'%');
+        return $query->execute();
+    }
+
 
 }
