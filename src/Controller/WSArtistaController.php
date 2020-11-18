@@ -17,13 +17,24 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 class WSArtistaController extends AbstractController
 {
 
-    /**
+     /**
      * @Route("/ws/saisadog/artista/obtener", name="ws/artista/obtener", methods={"GET"})
      */
     public function getArtistas() : JsonResponse
     {
         $entityManager = $this->getDoctrine()->getManager();
         $artistas = $entityManager->getRepository(Artista::class)->findAllOrder();
+        $json = $this->convertirJson($artistas);
+        return $json;
+    }
+
+    /**
+     * @Route("/ws/saisadog/artista/obtener/{termino}", name="ws/artista/obtener/termino", methods={"GET"})
+     */
+    public function getArtistasPorTermino($termino) : JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $artistas = $entityManager->getRepository(Artista::class)->findByTermino($termino);
         $json = $this->convertirJson($artistas);
         return $json;
     }
